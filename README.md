@@ -14,22 +14,27 @@ Image contains Nginx with dynamic configuration via environment variables
 
 ***HOW TO USE*** 
 
+Create new folder and go there.
+```
+mkdir self_certs && cd self_certs
+```
+
 generate certificate with openssl:
 
 ```
-openssl req -x509 -newkey rsa:4096 -keyout /etc/ssl/self_certs/key.pem -out /etc/ssl/self_certs/cert.pem -days 10000 -nodes
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 90 -nodes
 ```
 
 pull created image from docker hub with:
 
-```python
+```
 docker pull kobetsds/nginx:latest
 ```
 
 run the container with the default values:
 
 ```
-docker run -p 80:80 -p 443:443 -v /etc/ssl/self_certs/:/etc/ssl/self_certs/ kobetsds/nginx:latest 
+docker run -p 80:80 -p 443:443 -v $(pwd)/:/etc/ssl/self_certs/ kobetsds/nginx:latest 
 ```
 
 run the container with values you want to set and change the variables values to the ones you want to use:
@@ -37,7 +42,7 @@ run the container with values you want to set and change the variables values to
 ```
 docker run -p 80:80 \
 -p 443:443 \
--v /etc/ssl/self_certs/:/etc/ssl/self_certs/ \
+-v $(pwd):/etc/ssl/self_certs/ \
 -e NGINX_HTTP_PORT=80 \
 -e NGINX_HTTPS_PORT=443 \
 -e SSL_CERT_PATH='/etc/ssl/self_certs/cert.pem' \
