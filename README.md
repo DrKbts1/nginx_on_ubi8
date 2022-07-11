@@ -38,6 +38,7 @@ docker run -p 80:80 -p 443:443 -v $(pwd)/:/etc/ssl/self_certs/ kobetsds/nginx:la
 ```
 
 run the container with values you want to set and change the variables values to the ones you want to use:
+*don't forget to change values after -p to ports you want to use.*
 
 ```
 docker run -p 80:80 \
